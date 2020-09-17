@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capstone-project-container-build
+  labels:
+    app: capstone-project
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: capstone-project
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: capstone-project
+    spec:
+      containers:
+        - image: IMAGE
+          imagePullPolicy: Always
+          name: capstone-project
+          ports:
+            - containerPort: 80
+          readinessProbe:
+              httpGet:
+                path: /
+                port: 80
+              periodSeconds: 10
+              timeoutSeconds: 5
+              successThreshold: 1
+              failureThreshold: 10
