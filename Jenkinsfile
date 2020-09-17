@@ -36,7 +36,7 @@ pipeline {
         stage('Set Kubernetes Config'){
             steps {
                 withAWS(region:'us-east-1',credentials:'aws') {
-                    sh 'sudo aws eks --region us-east-1 update-kubeconfig --name kubeClusters'                    
+                    sh 'aws eks --region us-east-1 update-kubeconfig --name kubeClusters'                    
                 }
             }
         }
@@ -45,7 +45,7 @@ pipeline {
                 sh '''
                     export IMAGE="$registry:$BUILD_NUMBER"
                     sed -ie "s~IMAGE~$IMAGE~g" kubernetes/flask-container.yml
-                    sudo kubectl apply -f ./kubernetes
+                    kubectl apply -f ./kubernetes
                     '''
             }
         }         
