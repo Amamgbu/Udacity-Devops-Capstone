@@ -16,5 +16,5 @@ sh 	eksctl create cluster \
     --zones us-west-2c \
 
 
-sh  aws eks --region us-west-2 update-kubeconfig --name kubeClusters
+sh  aws eks --region us-east-1d update-kubeconfig --name kubeClusters
 
